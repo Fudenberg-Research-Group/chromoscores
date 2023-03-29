@@ -5,7 +5,7 @@
 
 
 def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
-    """
+    '''
     Peak snippet; snippet with a size of "size" around peak with diagonal index of
     "stall_list_index" and off-diagonal index of "peak_index" from a
     contact map, "contact_map", and list of boundary elements of "stall_list":
@@ -28,7 +28,7 @@ def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
 
      end function
     ----------------
-    """
+    '''
 
     if stall_list_index > len(stall_list):
         raise ValueError("peak index should be in the range of stall list")
@@ -295,6 +295,21 @@ def peak_score(peak_snippet, peak_length, background_length, pseudo_count=1):
 
 
 def tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance):
+    """
+    ----------------------
+    Function tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance)
+    begin function
+
+    set in_tad, out_tad, and adjacent matrices from tad_snippet_sectors function
+
+    assert adjacent matrix to be in the shape of in_tad matrix 
+
+    return score as average of in_tad matrix over out_tad score:
+           tad_score=np.mean(pile_center[in_tad]) / np.mean(pile_center[out_tad])
+
+    end function
+    ----------------------
+    """
     in_tad, out_tad, pile_center = tad_snippet_sectors(
         contact_map, stall_list, index, delta, diag_offset, max_distance
     )
