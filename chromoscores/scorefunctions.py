@@ -2,13 +2,33 @@
 
 
 #################################  snippets  ##################################
-########   Peak snippet
-### snippet with a size of "size" around peak with diagonal index of
-### "stall_list_index" and off-diagonal index of "peak_index" from a
-###contact map, "contact_map", and list of boundary elements of "stall_list":
 
 
 def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
+    """
+    Peak snippet; snippet with a size of "size" around peak with diagonal index of
+    "stall_list_index" and off-diagonal index of "peak_index" from a
+    contact map, "contact_map", and list of boundary elements of "stall_list":
+    -----------------
+    Function peak_snippet(contact_map, stall_list, stall_index, peak_index, size):
+
+    begin function
+
+         raise an error if peak_index is out of stall list range
+
+         set snippet_matrix from contact_map containing peak with a selected size:
+             snippet = contact_map[
+                       (stall_list[stall_list_index] - size) : (stall_list[stall_list_index] + size),
+                       (stall_list[stall_list_index + peak_index] - size) : (
+                        stall_list[stall_list_index + peak_index] + size
+                        ),
+                        ]
+
+     return snippet_matrix
+
+     end function
+    ----------------
+    """
 
     if stall_list_index > len(stall_list):
         raise ValueError("peak index should be in the range of stall list")
@@ -22,12 +42,12 @@ def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
     return snippet
 
 
-###########   Tad snippet
-### To extract Tad snippets adjacent to a boundary element with index of
-### "index" from a list of "stall_list":
-
-
 def tad_snippet(contact_map, stall_list, index):
+    """
+    Tad snippet
+    To extract Tad snippets adjacent to a boundary element with index of
+    "index" from a list of "stall_list":
+    """
 
     if index + 1 > len(stall_list):
         raise ValueError("index + 1 should be in the range of stall list")
@@ -39,15 +59,16 @@ def tad_snippet(contact_map, stall_list, index):
     return tad
 
 
-#######   Tad snippet sectors
-### setting area in_tad vs area out_tad. "Delta" is defined to exclude
-### flames when extracting in_tad and out_tad areas.
 
 
 def tad_snippet_sectors(
     contact_map, stall_list, index, delta, diag_offset, max_distance
 ):
-
+    '''
+    Tad snippet sectors
+    setting area in_tad vs area out_tad. "Delta" is defined to exclude
+    flames when extracting in_tad and out_tad areas.
+    '''
     tad = tad_snippet(contact_map, stall_list, index)
     tad_size = len(tad)
 
@@ -71,13 +92,15 @@ def tad_snippet_sectors(
     return in_tad, out_tad, pile_center
 
 
-###########   Flame snippet (vertical)
-### To extract snippets around a vertical flame due to a boundary element
-### with index "index" from a list of boundary elements "stall_list":
-### ("edge_length" is the excluded areas at the ends of the flame)
 
 
 def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
+    '''
+    Flame snippet (vertical)
+    To extract snippets around a vertical flame due to a boundary element
+    with index "index" from a list of boundary elements "stall_list":
+    ("edge_length" is the excluded areas at the ends of the flame)
+    '''
     snippet = contact_map[
         (stall_list[n] + edge_length) : (stall_list[n + 1] - edge_length),
         (stall_list[n + 1] - width) : (stall_list[n + 1] + width),
@@ -85,13 +108,16 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
     return snippet
 
 
-###########   Flame snippet (horizontal)
-### To extract snippets of a horizontal flame due to a boundary element with
-### index "index" from a list of boundary elements "stall_list": ("edge_length"
-### is the excluded areas at the end of the flame)
+
 
 
 def flame_snippet_horizontal(contact_map, stall_list, index, size, edge_length):
+    '''
+    Flame snippet (horizontal)
+    To extract snippets of a horizontal flame due to a boundary element with
+    index "index" from a list of boundary elements "stall_list": ("edge_length"
+    is the excluded areas at the end of the flame)
+    '''
     snippet = contact_map[
         (stall_list[n] - width) : (stall_list[n] + width),
         (stall_list[n] + edge_length) : (stall_list[n + 1] - edge_length),
@@ -209,8 +235,10 @@ def tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance):
 
 
 ######## Flame scores #########
-########### vertical flame score ###############
 def flame_score_v(flame_snippet, flame_thickness, background_thickness):
+    '''
+    vertical flame score 
+    '''
     mid = (np.shape(flame_snippet)[1]) // 2 + 1
     return np.mean(
         avg_peaks[:, mid - flame_thickness // 2 : mid + flame_thickness // 2]
@@ -219,9 +247,11 @@ def flame_score_v(flame_snippet, flame_thickness, background_thickness):
     )
 
 
-############ horizontal flame score ###########
+
 def flame_score_h(flame_snippet, flame_thickness, background_thickness):
-    ### 6x6 area shifted down & left towards the diagonal ###
+    '''
+    horizontal flame score
+    '''
     mid = len(flame_snippet) // 2 + 1
     return np.mean(
         flame_snippet[mid - flame_thickness // 2 : mid + flame_thickness // 2, :]
