@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
     """
     Peak snippet; snippet with a size of "size" around peak with diagonal index of
