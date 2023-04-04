@@ -116,9 +116,9 @@ def flame_score_v(flame_snippet, flame_thickness, background_thickness):
     """
     mid = (np.shape(flame_snippet)[1]) // 2 + 1
     return np.mean(
-        avg_peaks[:, mid - flame_thickness // 2:mid + flame_thickness // 2]
+        flame_snippet[:, mid - flame_thickness // 2:mid + flame_thickness // 2]
     ) / np.mean(
-        avg_peaks[:, mid - background_thickness // 2:mid + background_thickness // 2]
+        flame_snippet[:, mid - background_thickness // 2:mid + background_thickness // 2]
     )
 
 
@@ -130,7 +130,7 @@ def flame_score_h(flame_snippet, flame_thickness, background_thickness):
     return np.mean(
         flame_snippet[mid - flame_thickness // 2:mid + flame_thickness // 2,:]
     ) / np.mean(
-        avg_peaks[mid - background_thickness // 2:mid + background_thickness // 2,:]
+        flame_snippet[mid - background_thickness // 2:mid + background_thickness // 2,:]
     )
 
 
