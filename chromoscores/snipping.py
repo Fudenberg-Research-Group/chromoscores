@@ -1,25 +1,20 @@
 import numpy as np
 
 
-def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
+def peak_snipping(contact_map, size, peak_coordinate):
     """
-    Peak snippet; snippet with a size of "size" around peak with diagonal index of
-    "stall_list_index" and off-diagonal index of "peak_index" from a
-    contact map, "contact_map", and list of boundary elements of "stall_list":
+    Peak snippet; snippet with a size of "size" around peak with coordinate of "peak_coordinate"
+    on a contact map, "contact_map". peak_coordinate should be in the format of (x,)
     -----------------
-    Function peak_snippet(contact_map, stall_list, stall_index, peak_index, size):
+    Function peak_snippet(contact_map, size, peak_coordinate):
 
     begin function
 
-         raise an error if peak_index is out of stall list range
+         raise an error if peak coordinate + window size is out of the map
 
-         set snippet_matrix from contact_map containing peak with a selected size:
-             snippet = contact_map[
-                       (stall_list[stall_list_index] - size) : (stall_list[stall_list_index] + size),
-                       (stall_list[stall_list_index + peak_index] - size) : (
-                        stall_list[stall_list_index + peak_index] + size
-                        ),
-                        ]
+         snippet = contact_map[
+        (peak_coordinate[0] - size) : (peak_coordinate[0] + size),
+        (peak_coordinate[1] - size) : (peak_coordinate[1] + size)]
 
      return snippet_matrix
 
@@ -27,15 +22,19 @@ def peak_snippet(contact_map, stall_list, stall_list_index, peak_index, size):
     ----------------
     """
 
-    if stall_list_index > len(stall_list):
-        raise ValueError("peak index should be in the range of stall list")
+    if (peak_coordinate[1] + size) > len(contact_map) or (
+        peak_coordinate[0] - size
+    ) < 0:
+
+        raise ValueError(
+            "selected window size for peak coordinate exceeds size of the contact map"
+        )
 
     snippet = contact_map[
-        (stall_list[stall_list_index] - size) : (stall_list[stall_list_index] + size),
-        (stall_list[stall_list_index + peak_index] - size) : (
-            stall_list[stall_list_index + peak_index] + size
-        ),
+        (peak_coordinate[0] - size) : (peak_coordinate[0] + size),
+        (peak_coordinate[1] - size) : (peak_coordinate[1] + size),
     ]
+
     return snippet
 
 
