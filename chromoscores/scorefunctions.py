@@ -1,7 +1,7 @@
 import numpy as np
 
 
-# peak score
+'''peak score'''
 def peak_score_upperRight(peak_snippet, peak_length, background_length, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
@@ -29,7 +29,7 @@ def peak_score_lowerRight(peak_snippet, peak_length, background_length, pseudo_c
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length:mid + background_length :,
+            mid + peak_length:mid + background_length:,
             mid + peak_length:mid + background_length,
         ]
     )
@@ -65,7 +65,7 @@ def peak_score_lowerLeft(peak_snippet, peak_length, background_length, pseudo_co
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length:mid + background_length :,
+            mid + peak_length:mid + background_length:,
             mid - background_length:mid - peak_length,
         ]
     )
@@ -83,7 +83,7 @@ def peak_score(peak_snippet, peak_length, background_length, pseudo_count=1):
     return avg
 
 
-#Tad score 
+'''Tad score'''
 
 
 def tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance):
@@ -109,7 +109,7 @@ def tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance):
     return np.mean(pile_center[in_tad]) / np.mean(pile_center[out_tad])
 
 
-#Flame scores 
+'''Flame scores''' 
 def flame_score_v(flame_snippet, flame_thickness, background_thickness):
     """
     vertical flame score
@@ -128,9 +128,9 @@ def flame_score_h(flame_snippet, flame_thickness, background_thickness):
     """
     mid = len(flame_snippet) // 2 + 1
     return np.mean(
-        flame_snippet[mid - flame_thickness // 2:mid + flame_thickness // 2, :]
+        flame_snippet[mid - flame_thickness // 2:mid + flame_thickness // 2,:]
     ) / np.mean(
-        avg_peaks[mid - background_thickness // 2:mid + background_thickness // 2, :]
+        avg_peaks[mid - background_thickness // 2:mid + background_thickness // 2,:]
     )
 
 
