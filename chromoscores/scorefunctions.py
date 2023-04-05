@@ -1,6 +1,7 @@
 import numpy as np
 
 from chromoscores.snipping import tad_snippet_sectors
+
 """peak score"""
 
 
@@ -8,14 +9,14 @@ def peak_score_upperRight(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length: mid + peak_length,
-            mid - peak_length: mid + peak_length,
+            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - back_len: mid - peak_length,
-            mid + peak_length: mid + back_len,
+            mid - back_len : mid - peak_length,
+            mid + peak_length : mid + back_len,
         ]
     )
 
@@ -26,14 +27,14 @@ def peak_score_lowerRight(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length:mid + peak_length,
-            mid - peak_length:mid + peak_length,
+            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length:mid + back_len:,
-            mid + peak_length:mid + back_len,
+            mid + peak_length : mid + back_len :,
+            mid + peak_length : mid + back_len,
         ]
     )
 
@@ -44,14 +45,14 @@ def peak_score_upperLeft(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length:mid + peak_length,
-            mid - peak_length:mid + peak_length,
+            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - back_len:mid - peak_length,
-            mid - back_len:mid - peak_length,
+            mid - back_len : mid - peak_length,
+            mid - back_len : mid - peak_length,
         ]
     )
 
@@ -62,14 +63,14 @@ def peak_score_lowerLeft(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length:mid + peak_length,
-            mid - peak_length:mid + peak_length,
+            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length:mid + back_len:,
-            mid - back_len:mid - peak_length,
+            mid + peak_length : mid + back_len :,
+            mid - back_len : mid - peak_length,
         ]
     )
 
@@ -122,11 +123,11 @@ def flame_score_v(flame_snippet, flame_thickness, background_thickness):
     """
     mid = (np.shape(flame_snippet)[1]) // 2 + 1
     flame_interior = np.mean(
-        flame_snippet[:, mid - flame_thickness // 2:mid + flame_thickness // 2]
+        flame_snippet[:, mid - flame_thickness // 2 : mid + flame_thickness // 2]
     )
     flame_background = np.mean(
         flame_snippet[
-           :, mid - background_thickness // 2:mid + background_thickness // 2
+            :, mid - background_thickness // 2 : mid + background_thickness // 2
         ]
     )
 
@@ -139,11 +140,11 @@ def flame_score_h(flame_snippet, flame_thickness, background_thickness):
     """
     mid = len(flame_snippet) // 2 + 1
     flame_interior = np.mean(
-        flame_snippet[mid - flame_thickness // 2:mid + flame_thickness // 2, :]
+        flame_snippet[mid - flame_thickness // 2 : mid + flame_thickness // 2, :]
     )
     flame_background = np.mean(
         flame_snippet[
-            mid - background_thickness // 2:mid + background_thickness // 2, :
+            mid - background_thickness // 2 : mid + background_thickness // 2, :
         ]
     )
 
