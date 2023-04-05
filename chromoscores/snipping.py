@@ -144,7 +144,7 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
 
          set snippet_matrix from contact_map containing flame with a selected width:
              snippet = contact_map[
-             (stall_list[n] + edge_length): (stall_list[n + 1] - edge_length),
+             (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
              (stall_list[n + 1] - width): (stall_list[n + 1] + width),
              ]
 
@@ -154,13 +154,13 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
     ------------------------------------------
     """
     snippet = contact_map[
-        (stall_list[n] + edge_length): (stall_list[n + 1] - edge_length),
+        (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
         (stall_list[n + 1] - width): (stall_list[n + 1] + width),
     ]
     return snippet
 
 
-def flame_snippet_horizontal(contact_map, stall_list, index, size, edge_length):
+def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length):
     """
     Flame snippet (horizontal)
     To extract snippets of a horizontal flame due to a boundary element with
@@ -173,8 +173,8 @@ def flame_snippet_horizontal(contact_map, stall_list, index, size, edge_length):
 
          set snippet_matrix from contact_map containing flame with a selected width:
              snippet = contact_map[
-             (stall_list[n] - width): (stall_list[n] + width),
-             (stall_list[n] + edge_length): (stall_list[n + 1] - edge_length),
+             (stall_list[index] - width): (stall_list[index] + width),
+             (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
              ]
 
     return snippet_matrix
@@ -183,7 +183,7 @@ def flame_snippet_horizontal(contact_map, stall_list, index, size, edge_length):
     ---------------------------------------
     """
     snippet = contact_map[
-        (stall_list[n] - width): (stall_list[n] + width),
-        (stall_list[n] + edge_length): (stall_list[n + 1] - edge_length),
+        (stall_list[index] - width): (stall_list[index] + width),
+        (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
     ]
     return snippet
