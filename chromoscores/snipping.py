@@ -3,8 +3,9 @@ import numpy as np
 
 def peak_snipping(contact_map, size, peak_coordinate):
     """
-    Peak snippet; snippet with a size of "size" around peak with coordinate of "peak_coordinate"
-    on a contact map, "contact_map". peak_coordinate should be in the format of (i,j)
+    Peak snippet; snippet with a "size" around peak with "peak_coordinate"
+    on a contact map, "contact_map". peak_coordinate should be in the format
+     of (i,j)
     -----------------
     Function peak_snippet(contact_map, size, peak_coordinate):
 
@@ -79,7 +80,8 @@ def tad_snippet_sectors(
     setting area in_tad vs area out_tad. "Delta" is defined to exclude
     flames when extracting in_tad and out_tad areas.
     --------------------------------------
-    Function tad_snippet_sectors(contact_map, stall_list, index, delta, diag_offset, max_distance):
+    Function tad_snippet_sectors(contact_map, stall_list, index, delta, 
+    diag_offset, max_distance):
 
          begin function
 
@@ -138,11 +140,13 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
     with index "index" from a list of boundary elements "stall_list":
     ("edge_length" is the excluded areas at the ends of the flame)
     ------------------------------------------
-    Function flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
+    Function flame_snippet_vertical(contact_map, stall_list, index, width,
+     edge_length):
 
          begin function
 
-         set snippet_matrix from contact_map containing flame with a selected width:
+         set snippet_matrix from contact_map containing flame with a selected
+          width:
              snippet = contact_map[
              (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
              (stall_list[n + 1] - width): (stall_list[n + 1] + width),
@@ -167,7 +171,8 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
     index "index" from a list of boundary elements "stall_list": ("edge_length"
     is the excluded areas at the end of the flame)
     ---------------------------------------
-    Function flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length):
+    Function flame_snippet_horizontal(contact_map, stall_list, index, width,
+     edge_length):
 
          begin function
 
