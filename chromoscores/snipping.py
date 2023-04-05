@@ -134,7 +134,7 @@ def tad_snippet_sectors(
     return in_tad, out_tad, pile_center
 
 
-def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
+def flame_snippet_vertical(contact_map, stall_list, index, width, edge):
     """
     Flame snippet (vertical)
     To extract snippets around a vertical flame due to a boundary element
@@ -160,13 +160,13 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
     ------------------------------------------
     """
     snippet = contact_map[
-        (stall_list[index] + edge_length):(stall_list[index + 1] - edge_length),
+        (stall_list[index] + edge):(stall_list[index + 1] - edge),
         (stall_list[index + 1] - width):(stall_list[index + 1] + width),
     ]
     return snippet
 
 
-def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length):
+def flame_snippet_horizontal(contact_map, stall_list, index, width, edge):
     """
     Flame snippet (horizontal)
     To extract snippets of a horizontal flame due to a boundary element with
@@ -182,7 +182,7 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
           width:
              snippet = contact_map[
              (stall_list[index] - width):(stall_list[index] + width),
-             (stall_list[index] + edge_length):(stall_list[index + 1] - 
+             (stall_list[index] + edge_length):(stall_list[index + 1] -
              edge_length),]
 
     return snippet_matrix
@@ -192,6 +192,6 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
     """
     snippet = contact_map[
         (stall_list[index] - width):(stall_list[index] + width),
-        (stall_list[index] + edge_length):(stall_list[index + 1] - edge_length),
+        (stall_list[index] + edge):(stall_list[index + 1] - edge),
     ]
     return snippet
