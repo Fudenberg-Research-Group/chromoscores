@@ -4,42 +4,24 @@ from chromoscores.snipping import tad_snippet_sectors
 """peak score"""
 
 
-def peak_score_upperRight(peak_snippet, peak_length, back_length, pseudo_count=1):
+def peak_score_upperRight(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length:mid + peak_length, mid - peak_length:mid + peak_length
-        ]
+            mid - peak_length:mid + peak_length, mid - peak_length:mid +
+             peak_length]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - back_length:mid - peak_length,
-            mid + peak_length:mid + back_length,
+            mid - back_len:mid - peak_length,
+            mid + peak_length:mid + back_len,
         ]
     )
 
     return peak_interior / peak_background
 
 
-def peak_score_lowerRight(peak_snippet, peak_length, back_length, pseudo_count=1):
-    mid = len(peak_snippet) // 2
-    peak_interior = pseudo_count + np.mean(
-        peak_snippet[
-            mid - peak_length:mid + peak_length,
-            mid - peak_length:mid + peak_length,
-        ]
-    )
-    peak_background = pseudo_count + np.mean(
-        peak_snippet[
-            mid + peak_length:mid + back_length:,
-            mid + peak_length:mid + back_length,
-        ]
-    )
-
-    return peak_interior / peak_background
-
-
-def peak_score_upperLeft(peak_snippet, peak_length, back_length, pseudo_count=1):
+def peak_score_lowerRight(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
@@ -49,15 +31,15 @@ def peak_score_upperLeft(peak_snippet, peak_length, back_length, pseudo_count=1)
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - back_length:mid - peak_length,
-            mid - back_length:mid - peak_length,
+            mid + peak_length:mid + back_len:,
+            mid + peak_length:mid + back_len,
         ]
     )
 
     return peak_interior / peak_background
 
 
-def peak_score_lowerLeft(peak_snippet, peak_length, back_length, pseudo_count=1):
+def peak_score_upperLeft(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
@@ -67,20 +49,38 @@ def peak_score_lowerLeft(peak_snippet, peak_length, back_length, pseudo_count=1)
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length:mid + back_length:,
-            mid - back_length:mid - peak_length,
+            mid - back_len:mid - peak_length,
+            mid - back_len:mid - peak_length,
         ]
     )
 
     return peak_interior / peak_background
 
 
-def peak_score(peak_snippet, peak_length, back_length, pseudo_count=1):
+def peak_score_lowerLeft(peak_snippet, peak_length, back_len, pseudo_count=1):
+    mid = len(peak_snippet) // 2
+    peak_interior = pseudo_count + np.mean(
+        peak_snippet[
+            mid - peak_length:mid + peak_length,
+            mid - peak_length:mid + peak_length,
+        ]
+    )
+    peak_background = pseudo_count + np.mean(
+        peak_snippet[
+            mid + peak_length:mid + back_len:,
+            mid - back_len:mid - peak_length,
+        ]
+    )
+
+    return peak_interior / peak_background
+
+
+def peak_score(peak_snippet, peak_length, back_len, pseudo_count=1):
     avg = (
-        peak_score_upperRight(peak_snippet, peak_length, back_length)
-        + peak_score_lowerRight(peak_snippet, peak_length, back_length)
-        + peak_score_upperLeft(peak_snippet, peak_length, back_length)
-        + peak_score_lowerLeft(peak_snippet, peak_length, back_length)
+        peak_score_upperRight(peak_snippet, peak_length, back_len)
+        + peak_score_lowerRight(peak_snippet, peak_length, back_len)
+        + peak_score_upperLeft(peak_snippet, peak_length, back_len)
+        + peak_score_lowerLeft(peak_snippet, peak_length, back_len)
     ) / 4
     return avg
 
