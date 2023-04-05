@@ -14,8 +14,8 @@ def peak_snipping(contact_map, size, peak_coordinate):
          raise an error if peak coordinate + window size is out of the map
 
          snippet = contact_map[
-        (peak_coordinate[0] - size): (peak_coordinate[0] + size),
-        (peak_coordinate[1] - size): (peak_coordinate[1] + size)]
+        (peak_coordinate[0] - size):(peak_coordinate[0] + size),
+        (peak_coordinate[1] - size):(peak_coordinate[1] + size)]
 
      return snippet_matrix
 
@@ -32,8 +32,8 @@ def peak_snipping(contact_map, size, peak_coordinate):
         )
 
     snippet = contact_map[
-        (peak_coordinate[0] - size): (peak_coordinate[0] + size),
-        (peak_coordinate[1] - size): (peak_coordinate[1] + size),
+        (peak_coordinate[0] - size):(peak_coordinate[0] + size),
+        (peak_coordinate[1] - size):(peak_coordinate[1] + size),
     ]
 
     return snippet
@@ -53,8 +53,8 @@ def tad_snippet(contact_map, stall_list, index):
 
          set tad_matrix between sequential stalls starting with index:
              tad = contact_map[
-                   stall_list[index]: stall_list[index + 1] + 1,
-                   stall_list[index]: stall_list[index + 1] + 1,
+                   stall_list[index]:stall_list[index + 1] + 1,
+                   stall_list[index]:stall_list[index + 1] + 1,
                    ]
 
     return tad_matrix
@@ -66,8 +66,8 @@ def tad_snippet(contact_map, stall_list, index):
         raise ValueError("index + 1 should be in the range of stall list")
 
     tad = contact_map[
-        stall_list[index]: stall_list[index + 1] + 1,
-        stall_list[index]: stall_list[index + 1] + 1,
+        stall_list[index]:stall_list[index + 1] + 1,
+        stall_list[index]:stall_list[index + 1] + 1,
     ]
     return tad
 
@@ -89,20 +89,21 @@ def tad_snippet_sectors(
 
          set adjacent_tads starting with stall_index:
              pile_center = contact_map[
-             stall_list[index]: stall_list[index + 2] + 1,
-             stall_list[index]: stall_list[index + 2] + 1,
+             stall_list[index]:stall_list[index + 2] + 1,
+             stall_list[index]:stall_list[index + 2] + 1,
              ]
 
          raise an error if max_distance is larger than snippet
 
          set in_tad and out_tad areas:
              out_tad = np.zeros(np.shape(pile_center))
-             out_tad[delta: tad_size - delta, tad_size + delta: -delta] = 1
-             out_tad = np.tril(np.triu(out_tad, diag_offset), max_distance) > 0
+             out_tad[delta:tad_size - delta, tad_size + delta:-delta] = 1
+             out_tad = np.tril(np.triu(out_tad, diag_offset),
+              max_distance) > 0
 
              in_tad = np.zeros(np.shape(pile_center))
-             in_tad[delta: tad_size - delta, delta: tad_size - delta] = 1
-             in_tad[tad_size + delta: -delta, tad_size + delta: -delta] = 1
+             in_tad[delta:tad_size - delta, delta:tad_size - delta] = 1
+             in_tad[tad_size + delta:-delta, tad_size + delta:-delta] = 1
              in_tad = np.tril(np.triu(in_tad, diag_offset), max_distance) > 0
 
     return in_tad, out_tad, adjacent matrices
@@ -114,20 +115,20 @@ def tad_snippet_sectors(
     tad_size = len(tad)
 
     pile_center = contact_map[
-        stall_list[index]: stall_list[index + 2] + 1,
-        stall_list[index]: stall_list[index + 2] + 1,
+        stall_list[index]:stall_list[index + 2] + 1,
+        stall_list[index]:stall_list[index + 2] + 1,
     ]
 
     if max_distance > len(pile_center) // 2:
         raise ValueError("max distance exceeds tad snippet size")
 
     out_tad = np.zeros(np.shape(pile_center))
-    out_tad[delta: tad_size - delta, tad_size + delta: -delta] = 1
+    out_tad[delta:tad_size - delta, tad_size + delta:-delta] = 1
     out_tad = np.tril(np.triu(out_tad, diag_offset), max_distance) > 0
 
     in_tad = np.zeros(np.shape(pile_center))
-    in_tad[delta: tad_size - delta, delta: tad_size - delta] = 1
-    in_tad[tad_size + delta: -delta, tad_size + delta: -delta] = 1
+    in_tad[delta:tad_size - delta, delta:tad_size - delta] = 1
+    in_tad[tad_size + delta:-delta, tad_size + delta:-delta] = 1
     in_tad = np.tril(np.triu(in_tad, diag_offset), max_distance) > 0
 
     return in_tad, out_tad, pile_center
@@ -148,9 +149,9 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
          set snippet_matrix from contact_map containing flame with a selected
           width:
              snippet = contact_map[
-             (stall_list[index] + edge_length): (stall_list[index + 1] - 
+             (stall_list[index] + edge_length):(stall_list[index + 1] - 
              edge_length),
-             (stall_list[index + 1] - width): (stall_list[index + 1] + 
+             (stall_list[index + 1] - width):(stall_list[index + 1] + 
              width),]
 
     return snippet_matrix
@@ -159,8 +160,8 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
     ------------------------------------------
     """
     snippet = contact_map[
-        (stall_list[index] + edge_length): (stall_list[index + 1] - edge_length),
-        (stall_list[index + 1] - width): (stall_list[index + 1] + width),
+        (stall_list[index] + edge_length):(stall_list[index + 1] - edge_length),
+        (stall_list[index + 1] - width):(stall_list[index + 1] + width),
     ]
     return snippet
 
@@ -169,7 +170,7 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
     """
     Flame snippet (horizontal)
     To extract snippets of a horizontal flame due to a boundary element with
-    index "index" from a list of boundary elements "stall_list": ("edge_length"
+    index "index" from a list of boundary elements "stall_list":("edge_length"
     is the excluded areas at the end of the flame)
     ---------------------------------------
     Function flame_snippet_horizontal(contact_map, stall_list, index, width,
@@ -180,9 +181,9 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
          set snippet_matrix from contact_map containing flame with a selected
           width:
              snippet = contact_map[
-             (stall_list[index] - width): (stall_list[index] + width),
-             (stall_list[index] + edge_length): (stall_list[index + 1] - edge_length),
-             ]
+             (stall_list[index] - width):(stall_list[index] + width),
+             (stall_list[index] + edge_length):(stall_list[index + 1] - 
+             edge_length),]
 
     return snippet_matrix
 
@@ -190,7 +191,7 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
     ---------------------------------------
     """
     snippet = contact_map[
-        (stall_list[index] - width): (stall_list[index] + width),
-        (stall_list[index] + edge_length): (stall_list[index + 1] - edge_length),
+        (stall_list[index] - width):(stall_list[index] + width),
+        (stall_list[index] + edge_length):(stall_list[index + 1] - edge_length),
     ]
     return snippet
