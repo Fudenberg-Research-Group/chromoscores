@@ -89,7 +89,7 @@ def peak_score(peak_snippet, peak_length, background_length, pseudo_count=1):
 def tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance):
     """
     ----------------------
-    Function tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance)
+    Function tad_score(contact_map,stall_list,index,delta,diag_offset,max_distance)
     begin function
 
     set in_tad, out_tad, and adjacent matrices from tad_snippet_sectors function

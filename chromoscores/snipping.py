@@ -28,7 +28,7 @@ def peak_snipping(contact_map, size, peak_coordinate):
     ) < 0:
 
         raise ValueError(
-            "selected window size for peak coordinate exceeds size of the contact map"
+            "window size for peak coordinate exceeds size of the contact map"
         )
 
     snippet = contact_map[
@@ -148,9 +148,10 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
          set snippet_matrix from contact_map containing flame with a selected
           width:
              snippet = contact_map[
-             (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
-             (stall_list[n + 1] - width): (stall_list[n + 1] + width),
-             ]
+             (stall_list[index] + edge_length): (stall_list[index + 1] - 
+             edge_length),
+             (stall_list[index + 1] - width): (stall_list[index + 1] + 
+             width),]
 
     return snippet_matrix
 
@@ -158,8 +159,8 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
     ------------------------------------------
     """
     snippet = contact_map[
-        (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
-        (stall_list[n + 1] - width): (stall_list[n + 1] + width),
+        (stall_list[index] + edge_length): (stall_list[index + 1] - edge_length),
+        (stall_list[index + 1] - width): (stall_list[index + 1] + width),
     ]
     return snippet
 
@@ -176,10 +177,11 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
 
          begin function
 
-         set snippet_matrix from contact_map containing flame with a selected width:
+         set snippet_matrix from contact_map containing flame with a selected
+          width:
              snippet = contact_map[
              (stall_list[index] - width): (stall_list[index] + width),
-             (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
+             (stall_list[index] + edge_length): (stall_list[index + 1] - edge_length),
              ]
 
     return snippet_matrix
@@ -189,6 +191,6 @@ def flame_snippet_horizontal(contact_map, stall_list, index, width, edge_length)
     """
     snippet = contact_map[
         (stall_list[index] - width): (stall_list[index] + width),
-        (stall_list[index] + edge_length): (stall_list[n + 1] - edge_length),
+        (stall_list[index] + edge_length): (stall_list[index + 1] - edge_length),
     ]
     return snippet
