@@ -80,7 +80,7 @@ def tad_snippet_sectors(
     setting area in_tad vs area out_tad. "Delta" is defined to exclude
     flames when extracting in_tad and out_tad areas.
     --------------------------------------
-    Function tad_snippet_sectors(contact_map, stall_list, index, delta, 
+    Function tad_snippet_sectors(contact_map, stall_list, index, delta,
     diag_offset, max_distance):
 
          begin function
@@ -149,9 +149,9 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge_length):
          set snippet_matrix from contact_map containing flame with a selected
           width:
              snippet = contact_map[
-             (stall_list[index] + edge_length):(stall_list[index + 1] - 
+             (stall_list[index] + edge_length):(stall_list[index + 1] -
              edge_length),
-             (stall_list[index + 1] - width):(stall_list[index + 1] + 
+             (stall_list[index + 1] - width):(stall_list[index + 1] +
              width),]
 
     return snippet_matrix

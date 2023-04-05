@@ -1,6 +1,6 @@
 import numpy as np
 
-from chromoscores.snipping import *
+from chromoscores.snipping import tad_snippet_sectors
 """peak score"""
 
 
@@ -137,11 +137,11 @@ def flame_score_h(flame_snippet, flame_thickness, background_thickness):
     """
     mid = len(flame_snippet) // 2 + 1
     flame_interior = np.mean(
-        flame_snippet[mid - flame_thickness // 2:mid + flame_thickness // 2,:]
+        flame_snippet[mid - flame_thickness // 2:mid + flame_thickness // 2, :]
     )
     flame_background = np.mean(
         flame_snippet[
-            mid - background_thickness // 2:mid + background_thickness // 2,:
+            mid - background_thickness // 2:mid + background_thickness // 2, :
         ]
     )
 
