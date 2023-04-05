@@ -1,6 +1,3 @@
-
-
-
 import numpy as np
 
 
@@ -94,7 +91,7 @@ def peak_score(peak_snippet, peak_length, background_length, pseudo_count=1):
 def tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance):
     """
     ----------------------
-    Function tad_score(contact_map,stall_list,index,delta,diag_offset,max_distance)
+    Function tad_score(contact_map, stall_list, index, delta, diag_offset, max_distance)
     begin function
 
     set in_tad, out_tad, and adjacent matrices from tad_snippet_sectors function
@@ -125,13 +122,13 @@ def flame_score_v(flame_snippet, flame_thickness, background_thickness):
     flame_interior = np.mean(
         flame_snippet[:, mid - flame_thickness // 2:mid + flame_thickness // 2]
     )
-    flame_bacground = np.mean(
+    flame_background = np.mean(
         flame_snippet[
            :, mid - background_thickness // 2:mid + background_thickness // 2
         ]
     )
 
-    return flame_interior / flame_bacground
+    return flame_interior / flame_background
 
 
 def flame_score_h(flame_snippet, flame_thickness, background_thickness):
@@ -148,4 +145,4 @@ def flame_score_h(flame_snippet, flame_thickness, background_thickness):
         ]
     )
 
-    return flame_interior / flame_bacground
+    return flame_interior / flame_background
