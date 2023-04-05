@@ -8,14 +8,14 @@ def peak_score_upperRight(peak_snippet, peak_length, back_len, pseudo_count=1):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length:mid + peak_length, mid - peak_length:mid +
-             peak_length,
+            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - back_len:mid - peak_length,
-            mid + peak_length:mid + back_len,
+            mid - back_len : mid - peak_length,
+            mid + peak_length : mid + back_len,
         ]
     )
 
@@ -92,7 +92,7 @@ def peak_score(peak_snippet, peak_length, back_len, pseudo_count=1):
 def tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist):
     """
     ----------------------
-    Func tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist)
+    Fun tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist)
 
     begin function
 
