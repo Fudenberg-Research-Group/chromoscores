@@ -1,6 +1,6 @@
 import numpy as np
 
-
+from chromoscores.snipping import *
 """peak score"""
 
 
