@@ -9,7 +9,8 @@ def peak_score_upperRight(peak_snippet, peak_length, back_len, pseudo_count=1):
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
             mid - peak_length:mid + peak_length, mid - peak_length:mid +
-             peak_length]
+             peak_length,
+        ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
@@ -91,10 +92,11 @@ def peak_score(peak_snippet, peak_length, back_len, pseudo_count=1):
 def tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist):
     """
     ----------------------
-    Function tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist)
+    Func tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist)
+
     begin function
 
-    set in_tad, out_tad, and adjacent matrices from tad_snippet_sectors function
+    set in_tad, out_tad, and adjacent matrices from tad_snippet_sectors func
 
     assert adjacent matrix to be in the shape of in_tad matrix
 
