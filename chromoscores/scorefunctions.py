@@ -1,6 +1,6 @@
 import numpy as np
 
-from snipping import tad_snippet_sectors
+from chromoscores.snipping import tad_snippet_sectors
 
 """peak score"""
 
@@ -9,14 +9,14 @@ def peak_score_upperRight(peak_snippet, peak_length, back_len, pseudo_count):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length : mid + peak_length,
-            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length + 1,
+            mid - peak_length : mid + peak_length + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - back_len : mid - peak_length,
-            mid + peak_length : mid + back_len,
+            mid - back_len : mid - peak_length ,
+            mid + peak_length + 1 : mid + back_len + 1,
         ]
     )
 
@@ -27,14 +27,14 @@ def peak_score_lowerRight(peak_snippet, peak_length, back_len, pseudo_count):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length : mid + peak_length,
-            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length + 1,
+            mid - peak_length : mid + peak_length + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length : mid + back_len :,
-            mid + peak_length : mid + back_len,
+            mid + peak_length + 1 : mid + back_len + 1 :,
+            mid + peak_length + 1 : mid + back_len + 1,
         ]
     )
 
@@ -45,8 +45,8 @@ def peak_score_upperLeft(peak_snippet, peak_length, back_len, pseudo_count):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length : mid + peak_length,
-            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length + 1,
+            mid - peak_length : mid + peak_length + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
@@ -63,13 +63,13 @@ def peak_score_lowerLeft(peak_snippet, peak_length, back_len, pseudo_count):
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_length : mid + peak_length,
-            mid - peak_length : mid + peak_length,
+            mid - peak_length : mid + peak_length + 1,
+            mid - peak_length : mid + peak_length + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length : mid + back_len :,
+            mid + peak_length + 1 : mid + back_len + 1,
             mid - back_len : mid - peak_length,
         ]
     )
@@ -77,7 +77,7 @@ def peak_score_lowerLeft(peak_snippet, peak_length, back_len, pseudo_count):
     return peak_interior / peak_background
 
 
-def peak_scores(peak_snippet, peak_length, back_len, pseudo_count):
+def peak_score(peak_snippet, peak_length, back_len, pseudo_count):
     avg = (
         peak_score_upperRight(peak_snippet, peak_length, back_len,pseudo_count)
         + peak_score_lowerRight(peak_snippet, peak_length, back_len,pseudo_count)
