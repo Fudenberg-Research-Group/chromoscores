@@ -33,7 +33,7 @@ def peak_score_lowerRight(peak_snippet, peak_length, back_len, pseudo_count):
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_length + 1 : mid + back_len + 1 :,
+            mid + peak_length + 1 : mid + back_len + 1,
             mid + peak_length + 1 : mid + back_len + 1,
         ]
     )
