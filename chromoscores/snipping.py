@@ -39,7 +39,7 @@ def peak_snipping(contact_map, size, peak_coordinate):
     return snippet
 
 
-def tad_snippet(contact_map, stall_list, index):
+def tad_snipping(contact_map, stall_list, index):
     """
     Tad snippet
     To extract Tad snippets adjacent to a boundary element with index of
@@ -134,7 +134,7 @@ def tad_snippet_sectors(
     return in_tad, out_tad, pile_center
 
 
-def flame_snippet_vertical(contact_map, stall_list, index, width, edge):
+def flame_snipping_vertical(contact_map, stall_list, index, width, edge):
     """
     Flame snippet (vertical)
     To extract snippets around a vertical flame due to a boundary element
@@ -166,7 +166,7 @@ def flame_snippet_vertical(contact_map, stall_list, index, width, edge):
     return snippet
 
 
-def flame_snippet_horizontal(contact_map, stall_list, index, width, edge):
+def flame_snipping_horizontal(contact_map, stall_list, index, width, edge):
     """
     Flame snippet (horizontal)
     To extract snippets of a horizontal flame due to a boundary element with
