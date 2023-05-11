@@ -11,14 +11,14 @@ def peak_score_upperRight(
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_width : mid + peak_width + 1,
-            mid - peak_width : mid + peak_width + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - background_width : mid - peak_width,
-            mid + peak_width + 1 : mid + background_width + 1,
+            mid - background_width : mid - peak_width // 2,
+            mid + peak_width // 2 + 1 : mid + background_width + 1,
         ]
     )
 
@@ -31,14 +31,14 @@ def peak_score_lowerRight(
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_width : mid + peak_width + 1,
-            mid - peak_width : mid + peak_width + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_width + 1 : mid + background_width + 1,
-            mid + peak_width + 1 : mid + background_width + 1,
+            mid + peak_width // 2 + 1 : mid + background_width + 1,
+            mid + peak_width // 2 + 1 : mid + background_width + 1,
         ]
     )
 
@@ -51,14 +51,14 @@ def peak_score_upperLeft(
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_width : mid + peak_width + 1,
-            mid - peak_width : mid + peak_width + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid - background_width : mid - peak_width,
-            mid - background_width : mid - peak_width,
+            mid - background_width : mid - peak_width // 2,
+            mid - background_width : mid - peak_width // 2,
         ]
     )
 
@@ -71,14 +71,14 @@ def peak_score_lowerLeft(
     mid = len(peak_snippet) // 2
     peak_interior = pseudo_count + np.mean(
         peak_snippet[
-            mid - peak_width : mid + peak_width + 1,
-            mid - peak_width : mid + peak_width + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
+            mid - peak_width // 2 : mid + peak_width // 2 + 1,
         ]
     )
     peak_background = pseudo_count + np.mean(
         peak_snippet[
-            mid + peak_width + 1 : mid + background_width + 1,
-            mid - background_width : mid - peak_width,
+            mid + peak_width // 2 + 1 : mid + background_width + 1,
+            mid - background_width : mid - peak_width // 2,
         ]
     )
 
@@ -87,17 +87,35 @@ def peak_score_lowerLeft(
 
 def peak_score(
     peak_snippet,
-    peak_width=peak_width,
-    background_width=background_width,
-    pseudo_count=pseudo_count,
+    peak_width,
+    background_width,
+    pseudo_count,
 ):
     avg = (
-        peak_score_upperRight(peak_snippet, peak_width, background_width, pseudo_count)
-        + peak_score_lowerRight(
-            peak_snippet, peak_width, background_width, pseudo_count
+        peak_score_upperRight(
+            peak_snippet,
+            peak_width=peak_width,
+            background_width=background_width,
+            pseudo_count=pseudo_count,
         )
-        + peak_score_upperLeft(peak_snippet, peak_width, background_width, pseudo_count)
-        + peak_score_lowerLeft(peak_snippet, peak_width, background_width, pseudo_count)
+        + peak_score_lowerRight(
+            peak_snippet,
+            peak_width=peak_width,
+            background_width=background_width,
+            pseudo_count=pseudo_count,
+        )
+        + peak_score_upperLeft(
+            peak_snippet,
+            peak_width=peak_width,
+            background_width=background_width,
+            pseudo_count=pseudo_count,
+        )
+        + peak_score_lowerLeft(
+            peak_snippet,
+            peak_width=peak_width,
+            background_width=background_width,
+            pseudo_count=pseudo_count,
+        )
     ) / 4
     return avg
 
