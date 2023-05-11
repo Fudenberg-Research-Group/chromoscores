@@ -1,21 +1,21 @@
 import numpy as np
 
 
-def peak_snipping(contact_map, size, peak_coordinate):
+def peak_snipping(contact_map, window_size, peak_coordinate):
     """
-    Peak snippet; snippet with a "size" around peak with "peak_coordinate"
+    Peak snippet; snippet with a "window_size" around peak with "peak_coordinate"
     on a contact map, "contact_map". peak_coordinate should be in the format
      of (i,j)
     -----------------
-    Function peak_snippet(contact_map, size, peak_coordinate):
+    Function peak_snippet(contact_map, window_size, peak_coordinate):
 
     begin function
 
-         raise an error if peak coordinate + window size is out of the map
+         raise an error if peak coordinate + window window_size is out of the map
 
          snippet = contact_map[
-        (peak_coordinate[0] - size):(peak_coordinate[0] + size),
-        (peak_coordinate[1] - size):(peak_coordinate[1] + size)]
+        (peak_coordinate[0] - window_size):(peak_coordinate[0] + window_size),
+        (peak_coordinate[1] - window_size):(peak_coordinate[1] + window_size)]
 
      return snippet_matrix
 
@@ -23,17 +23,17 @@ def peak_snipping(contact_map, size, peak_coordinate):
     ----------------
     """
 
-    if (peak_coordinate[1] + size) > len(contact_map) or (
-        peak_coordinate[0] - size
+    if (peak_coordinate[1] + window_size) > len(contact_map) or (
+        peak_coordinate[0] - window_size
     ) < 0:
 
         raise ValueError(
-            "window size for peak coordinate exceeds size of the contact map"
+            "window window_size for peak coordinate exceeds window_size of the contact map"
         )
 
     snippet = contact_map[
-        (peak_coordinate[0] - size) : (peak_coordinate[0] + size),
-        (peak_coordinate[1] - size) : (peak_coordinate[1] + size),
+        (peak_coordinate[0] - window_size) : (peak_coordinate[0] + window_size),
+        (peak_coordinate[1] - window_size) : (peak_coordinate[1] + window_size),
     ]
 
     return snippet
@@ -97,13 +97,13 @@ def tad_snippet_sectors(
 
          set in_tad and out_tad areas:
              out_tad = np.zeros(np.shape(pile_center))
-             out_tad[delta:tad_size - delta, tad_size + delta:-delta] = 1
+             out_tad[delta:tad_window_size - delta, tad_window_size + delta:-delta] = 1
              out_tad = np.tril(np.triu(out_tad, diag_offset),
               max_distance) > 0
 
              in_tad = np.zeros(np.shape(pile_center))
-             in_tad[delta:tad_size - delta, delta:tad_size - delta] = 1
-             in_tad[tad_size + delta:-delta, tad_size + delta:-delta] = 1
+             in_tad[delta:tad_window_size - delta, delta:tad_window_size - delta] = 1
+             in_tad[tad_window_size + delta:-delta, tad_window_size + delta:-delta] = 1
              in_tad = np.tril(np.triu(in_tad, diag_offset), max_distance) > 0
 
     return in_tad, out_tad, adjacent matrices
@@ -112,7 +112,7 @@ def tad_snippet_sectors(
     --------------------------------------
     """
     tad = tad_snippet(contact_map, stall_list, index)
-    tad_size = len(tad)
+    tad_window_size = len(tad)
 
     pile_center = contact_map[
         stall_list[index] : stall_list[index + 2] + 1,
@@ -120,15 +120,15 @@ def tad_snippet_sectors(
     ]
 
     if max_distance > len(pile_center) // 2:
-        raise ValueError("max distance exceeds tad snippet size")
+        raise ValueError("max distance exceeds tad snippet window_size")
 
     out_tad = np.zeros(np.shape(pile_center))
-    out_tad[delta : tad_size - delta, tad_size + delta : -delta] = 1
+    out_tad[delta : tad_window_size - delta, tad_window_size + delta : -delta] = 1
     out_tad = np.tril(np.triu(out_tad, diag_offset), max_distance) > 0
 
     in_tad = np.zeros(np.shape(pile_center))
-    in_tad[delta : tad_size - delta, delta : tad_size - delta] = 1
-    in_tad[tad_size + delta : -delta, tad_size + delta : -delta] = 1
+    in_tad[delta : tad_window_size - delta, delta : tad_window_size - delta] = 1
+    in_tad[tad_window_size + delta : -delta, tad_window_size + delta : -delta] = 1
     in_tad = np.tril(np.triu(in_tad, diag_offset), max_distance) > 0
 
     return in_tad, out_tad, pile_center
