@@ -120,6 +120,19 @@ def peak_score(
     return avg
 
 
+"""Isolation score"""
+
+
+def isolation_score(contact_map, delta, diag_offset, max_dist, state, pseudo_count=1):
+    in_tad, out_tad, pile_center = get_isolation_snippets(
+        contact_map, delta, diag_offset, max_dist, state
+    )
+    assert pile_center.shape == (len(in_tad), len(in_tad))
+    return (pseudo_count + np.mean(pile_center[in_tad > 0])) / (
+        pseudo_count + np.mean(pile_center[out_tad > 0])
+    )
+
+
 """Tad score"""
 
 
