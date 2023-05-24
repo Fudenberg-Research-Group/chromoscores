@@ -17,17 +17,24 @@ assert peak_score(mat, peak_width=1, background_width=1, pseudo_count=1) == 2
 
 
 """ isolation snippets/score """
-example_A=np.array(np.ones((18,18)))
-a,b,c=get_isolation_snippets(example_A,1,3,10,1)
+example_A = np.array(np.ones((18, 18)))
+a, b, c = get_isolation_snippets(example_A, 1, 3, 10, 1)
 
-mat=a+b
-assert isolation_score(mat,delta=1,diag_offset=3,max_dist=10,state=1,pseudo_count=1)==1
+mat = a + b
+assert (
+    isolation_score(mat, delta=1, diag_offset=3, max_dist=10, state=1, pseudo_count=1)
+    == 1
+)
 
-mat=3*a+b
-assert isolation_score(mat,delta=1,diag_offset=3,max_dist=10,state=1,pseudo_count=1)=2
+mat = 3 * a + b
+assert (
+    isolation_score(mat, delta=1, diag_offset=3, max_dist=10, state=1, pseudo_count=1)
+    == 2
+)
 
 
-mat=a+3*b
-assert isolation_score(mat,delta=1,diag_offset=3,max_dist=10,state=1,pseudo_count=1)==0.5
-
-
+mat = a + 3 * b
+assert (
+    isolation_score(mat, delta=1, diag_offset=3, max_dist=10, state=1, pseudo_count=1)
+    == 0.5
+)
