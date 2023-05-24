@@ -39,6 +39,50 @@ def peak_snipping(contact_map, window_size, peak_coordinate):
     return snippet
 
 
+def get_isolation_snippets(
+    contact_map, delta=1, diag_offset=1, max_distance=10, state=1
+):
+    csize = len(contact_map) // 2
+    window_size = 4 * (diag_offset + delta) + 1
+    pile_center = contact_map[
+        csize - window_size // 2 : csize + window_size // 2 + 1,
+        csize - window_size // 2 : csize + window_size // 2 + 1,
+    ]
+
+    out_tad = np.zeros(np.shape(pile_center))
+    mask_out = np.zeros(np.shape(pile_center), dtype=bool)
+    mask_out[
+        window_size // 2 - diag_offset : window_size // 2,
+        window_size // 2 + 1 : window_size // 2 + diag_offset + 1,
+    ] = True
+    out_tad[mask_out] = pile_center[mask_out]
+    out_tad = np.tril(np.triu(out_tad, state * (diag_offset + 1)), max_distance)
+
+    in_tad = np.zeros(np.shape(pile_center))
+    mask = np.zeros(np.shape(pile_center), dtype=bool)
+    mask[
+        delta : delta + diag_offset,
+        diag_offset + delta + 1 : 2 * diag_offset + delta + 1,
+    ] = True
+    in_tad[mask] = pile_center[mask]
+
+    mask = np.zeros(np.shape(pile_center), dtype=bool)
+    mask[
+        window_size // 2 + delta : window_size // 2 + diag_offset + delta,
+        window_size // 2
+        + diag_offset
+        + delta
+        + 1 : window_size // 2
+        + 2 * diag_offset
+        + delta
+        + 1,
+    ] = True
+    in_tad[mask] = pile_center[mask]
+    in_tad = np.tril(np.triu(in_tad, state * (diag_offset + 1)), max_distance)
+
+    return in_tad, out_tad, pile_center
+
+
 def tad_snipping(contact_map, stall_list, index):
     """
     Tad snippet
