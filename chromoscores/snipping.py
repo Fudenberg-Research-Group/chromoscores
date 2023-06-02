@@ -190,28 +190,17 @@ def tad_snippet_sectors(
 
 def flame_snipping_vertical(contact_map, boundary_list, index, width, edge):
     """
-    Flame snippet (vertical)
-    To extract snippets around a vertical flame due to a boundary element
-    with index "index" from a list of boundary elements "boundary_list":
-    ("edge_length" is the excluded areas at the ends of the flame)
-    ------------------------------------------
-    Function flame_snippet_vertical(contact_map, boundary_list, index, width,
-     edge_length):
-
-         begin function
-
-         set snippet_matrix from contact_map containing flame with a selected
-          width:
-             snippet = contact_map[
-             (boundary_list[index] + edge_length):(boundary_list[index + 1] -
-             edge_length),
-             (boundary_list[index + 1] - width):(boundary_list[index + 1] +
-             width),]
-
-    return snippet_matrix
-
-    end function
-    ------------------------------------------
+    parameters
+    ----------
+    contact_map: contact map
+    boundary_list: list of the boundary elements positions on the diagonal.
+    index: index of the boundary element in the boundary_list. This should be in the range of boundary_list.
+    width: width of the flame
+    edge: excluded areas at the ends of the flame
+    
+    returns
+    -------
+    a snippet of the contact map around the specified flame
     """
     snippet = contact_map[
         (boundary_list[index] + edge) : (boundary_list[index + 1] - edge),
@@ -222,27 +211,17 @@ def flame_snipping_vertical(contact_map, boundary_list, index, width, edge):
 
 def flame_snipping_horizontal(contact_map, boundary_list, index, width, edge):
     """
-    Flame snippet (horizontal)
-    To extract snippets of a horizontal flame due to a boundary element with
-    index "index" from a list of boundary elements "boundary_list":("edge_length"
-    is the excluded areas at the end of the flame)
-    ---------------------------------------
-    Function flame_snippet_horizontal(contact_map, boundary_list, index, width,
-     edge_length):
-
-         begin function
-
-         set snippet_matrix from contact_map containing flame with a selected
-          width:
-             snippet = contact_map[
-             (boundary_list[index] - width):(boundary_list[index] + width),
-             (boundary_list[index] + edge_length):(boundary_list[index + 1] -
-             edge_length),]
-
-    return snippet_matrix
-
-    end function
-    ---------------------------------------
+    parameters
+    ----------
+    contact_map: contact map
+    boundary_list: list of the boundary elements positions on the diagonal.
+    index: index of the boundary element in the boundary_list. This should be in the range of boundary_list.
+    width: width of the flame
+    edge: excluded areas at the ends of the flame
+    
+    returns
+    -------
+    a snippet of the contact map around the specified flame
     """
     snippet = contact_map[
         (boundary_list[index] - width) : (boundary_list[index] + width),
