@@ -38,6 +38,25 @@ def peak_snipping(contact_map, window_size, peak_coordinate):
 
     return snippet
 
+def get_diagonal_pile_up(contact_map, lst, window_size):
+    mat = np.zeros((window_size, window_size))
+    for i in range(len(lst)):
+        mats += contact_map[
+            lst[i] - window_size // 2 : lst[i] + window_size // 2,
+            lst[i] - window_size // 2 : lst[i] + window_size // 2,
+        ]
+    return mat
+
+
+def get_expected_map(contact_map):
+    mat = np.zeros(np.shape(contact_map))
+    for i in range(len(contact_map)):
+        for j in range(len(contact_map) - i):
+            mat[i, i + j] = contact_map[i, i + j] / (
+                np.mean(np.diag(contact_map, k=j))
+            )
+            mat[i + j, i] = mat[i, i + j]
+    return mat
 
 def get_isolation_snippets(
     contact_map, delta=1, diag_offset=1, max_distance=10, state=1
