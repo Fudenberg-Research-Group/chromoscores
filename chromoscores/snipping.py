@@ -67,7 +67,7 @@ def peak_snipping(contact_map, window_size, peak_coordinate):
     return snippet
 
 
-def get_isolation_snippets(
+def get_isolation_areas(
     contact_map, delta=1, diag_offset=3, max_distance=10, state=1
 ):
     """
@@ -138,13 +138,13 @@ def tad_snipping(contact_map, boundary_list, index):
     """
 
     if index + 1 > len(boundary_list):
-        raise ValueError("index + 1 should be in the range of stall list")
+        raise ValueError("index + 1 should be in the range of boundary list")
 
-    tad = contact_map[
+    tads_snippet = contact_map[
         boundary_list[index] : boundary_list[index + 1] + 1,
         boundary_list[index] : boundary_list[index + 1] + 1,
     ]
-    return tad
+    return tads_snippet
 
 
 def tad_snippet_sectors(
@@ -164,7 +164,7 @@ def tad_snippet_sectors(
     -------
     areas with a size of diag_offset inside and outside a tad
     """
-    tad = tad_snippet(contact_map, boundary_list, index)
+    tad = tad_snipping(contact_map, boundary_list, index)
     tad_window_size = len(tad)
 
     pile_center = contact_map[
@@ -172,8 +172,12 @@ def tad_snippet_sectors(
         boundary_list[index] : boundary_list[index + 2] + 1,
     ]
 
+    if index + 1 > len(boundary_list):
+        raise ValueError("index + 1 should be in the range of boundary list")
+
     if max_distance > len(pile_center) // 2:
         raise ValueError("max distance exceeds tad snippet window_size")
+    
 
     out_tad = np.zeros(np.shape(pile_center))
     out_tad[delta : tad_window_size - delta, tad_window_size + delta : -delta] = 1
