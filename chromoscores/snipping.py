@@ -85,7 +85,6 @@ def get_isolation_snippets(
 
 def tad_snipping(contact_map, stall_list, index):
     """
-    Tad snippet
     To extract Tad snippets adjacent to a boundary element with index of
     "index" from a list of "stall_list":
     -------------------------
@@ -176,6 +175,7 @@ def tad_snippet_sectors(
     in_tad = np.tril(np.triu(in_tad, diag_offset), max_distance) > 0
 
     return in_tad, out_tad, pile_center
+
 
 
 def flame_snipping_vertical(contact_map, stall_list, index, width, edge):
