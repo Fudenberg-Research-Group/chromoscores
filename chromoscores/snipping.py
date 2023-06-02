@@ -1,54 +1,25 @@
 import numpy as np
 
 
-def peak_snipping(contact_map, window_size, peak_coordinate):
+
+def get_diagonal_pile_up(contact_map, BE_list, window_size):
     """
-    Peak snippet; snippet with a "window_size" around peak with "peak_coordinate"
-    on a contact map, "contact_map". peak_coordinate should be in the format
-     of (i,j)
-    -----------------
-    Function peak_snippet(contact_map, window_size, peak_coordinate):
-
-    begin function
-
-         raise an error if peak coordinate + window window_size is out of the map
-
-         snippet = contact_map[
-        (peak_coordinate[0] - window_size):(peak_coordinate[0] + window_size),
-        (peak_coordinate[1] - window_size):(peak_coordinate[1] + window_size)]
-
-     return snippet_matrix
-
-     end function
-    ----------------
+    contact_map: contact map
+    stall_list: list of the boundary elements positions on the diagonal to be piled up
+    window_size: size of the window
     """
-
-    if (peak_coordinate[1] + window_size) > len(contact_map) or (
-        peak_coordinate[0] - window_size
-    ) < 0:
-
-        raise ValueError(
-            "window window_size for peak coordinate exceeds window_size of the contact map"
-        )
-
-    snippet = contact_map[
-        (peak_coordinate[0] - window_size) : (peak_coordinate[0] + window_size),
-        (peak_coordinate[1] - window_size) : (peak_coordinate[1] + window_size),
-    ]
-
-    return snippet
-
-def get_diagonal_pile_up(contact_map, lst, window_size):
     mat = np.zeros((window_size, window_size))
-    for i in range(len(lst)):
-        mats += contact_map[
-            lst[i] - window_size // 2 : lst[i] + window_size // 2,
-            lst[i] - window_size // 2 : lst[i] + window_size // 2,
+    for i in range(len(BE_list)):
+        mat += contact_map[
+            BE_list[i] - window_size // 2 : BE_list[i] + window_size // 2,
+            BE_list[i] - window_size // 2 : BE_list[i] + window_size // 2,
         ]
     return mat
 
-
 def get_expected_map(contact_map):
+    """
+    contact_map: contact map
+    """
     mat = np.zeros(np.shape(contact_map))
     for i in range(len(contact_map)):
         for j in range(len(contact_map) - i):
@@ -58,9 +29,36 @@ def get_expected_map(contact_map):
             mat[i + j, i] = mat[i, i + j]
     return mat
 
+def peak_snipping(contact_map, window_size, peak_coordinate):
+    """
+    contact_map: contact map
+    window_size: size of the window
+    peak_coordinate: coordinate of the peak in (i,j) format
+    """
+    if (peak_coordinate[1] + window_size) > len(contact_map) or (
+        peak_coordinate[0] - window_size
+    ) < 0:
+        raise ValueError(
+            "window window_size for peak coordinate exceeds window_size of the contact map"
+        )
+    
+    snippet = contact_map[
+        (peak_coordinate[0] - window_size) : (peak_coordinate[0] + window_size),
+        (peak_coordinate[1] - window_size) : (peak_coordinate[1] + window_size),
+    ]
+    return snippet
+
+
 def get_isolation_snippets(
-    contact_map, delta=1, diag_offset=1, max_distance=10, state=1
+    contact_map, delta=1, diag_offset=3, max_distance=10, state=1
 ):
+    """
+    contact_map: contact map
+    delta: distance from the border between in_tad and out_tad
+    diag_offset: distance from the diagonal. This also determines the size of the snippet.
+    max_distance: maximum distance from the diagonal
+    state: 1 for triangle snippets, 0 for square snippets
+    """
     csize = len(contact_map) // 2
     window_size = 4 * (diag_offset + delta) + 1
     pile_center = contact_map[
@@ -104,24 +102,9 @@ def get_isolation_snippets(
 
 def tad_snipping(contact_map, stall_list, index):
     """
-    To extract Tad snippets adjacent to a boundary element with index of
-    "index" from a list of "stall_list":
-    -------------------------
-    Function tad_snippet(contact_map, stall_list, index):
-
-         begin function
-
-         raise an error if index is out of list range
-
-         set tad_matrix between sequential stalls starting with index:
-             tad = contact_map[
-                   stall_list[index]:stall_list[index + 1] + 1,
-                   stall_list[index]:stall_list[index + 1] + 1,
-                   ]
-
-    return tad_matrix
-
-    end function
+    contact_map: contact map
+    stall_list: list of the boundary elements positions on the diagonal.
+    index: index of the boundary element in the stall_list. This should be in the range of stall_list.
     """
 
     if index + 1 > len(stall_list):
