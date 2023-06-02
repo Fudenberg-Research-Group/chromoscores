@@ -136,10 +136,10 @@ def isolation_score(contact_map, delta, diag_offset, max_dist, state, pseudo_cou
 """Tad score"""
 
 
-def tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist):
+def tad_score(contact_map, boundary_list, index, delta, diag_offset, max_dist):
     """
     ----------------------
-    Fun tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist)
+    Fun tad_score(contact_map, boundary_list, index, delta, diag_offset, max_dist)
 
     begin function
 
@@ -154,7 +154,7 @@ def tad_score(contact_map, stall_list, index, delta, diag_offset, max_dist):
     ----------------------
     """
     in_tad, out_tad, pile_center = tad_snippet_sectors(
-        contact_map, stall_list, index, delta, diag_offset, max_dist
+        contact_map, boundary_list, index, delta, diag_offset, max_dist
     )
     assert pile_center.shape == (len(in_tad), len(in_tad))
     return np.mean(pile_center[in_tad]) / np.mean(pile_center[out_tad])
