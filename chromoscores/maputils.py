@@ -70,6 +70,8 @@ def get_observed_over_expected(contact_map):
     Returns
     -------
     a normalized contact map based on the average of each diagonal from the main diagonal
+
+    note: compare it with cooltools implementation. 
     """
     mat = np.zeros(np.shape(contact_map))
     for i in range(len(contact_map)):
