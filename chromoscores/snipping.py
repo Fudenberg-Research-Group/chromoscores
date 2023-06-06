@@ -2,45 +2,6 @@ import numpy as np
 
 
 
-def get_diagonal_pile_up(contact_map, boundary_list, window_size):
-    """
-    parameters
-    ----------
-    contact_map: contact map
-    boundary_list: list of the boundary elements positions on the diagonal 
-    window_size: size of the window
-
-    Returns
-    -------
-    a stackup of snippts around the boundary elements
-    """
-    mat = np.zeros((window_size, window_size))
-    for i in range(len(boundary_list)):
-        mat += contact_map[
-            boundary_list[i] - window_size // 2 : boundary_list[i] + window_size // 2,
-            boundary_list[i] - window_size // 2 : boundary_list[i] + window_size // 2,
-        ]
-    return mat
-
-def get_expected_map(contact_map):
-    """
-    parameters
-    ----------
-    contact_map: contact map
-
-    Returns
-    -------
-    a normalized contact map based on the average of each diagonal from the main diagonal
-    """
-    mat = np.zeros(np.shape(contact_map))
-    for i in range(len(contact_map)):
-        for j in range(len(contact_map) - i):
-            mat[i, i + j] = contact_map[i, i + j] / (
-                np.mean(np.diag(contact_map, k=j))
-            )
-            mat[i + j, i] = mat[i, i + j]
-    return mat
-
 def peak_snipping(contact_map, window_size, peak_coordinate):
     """
     parameters
