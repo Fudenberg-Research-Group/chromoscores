@@ -1,6 +1,5 @@
 import numpy as np
 
-from chromoscores.snipping import *
 
 """peak score"""
 
@@ -198,9 +197,9 @@ def peak_score(
 
 
 """Isolation score"""
-def _get_isolation_areas(
-    contact_map, delta=1, diag_offset=3, max_distance=10, state=1
-):
+
+
+def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, state=1):
     """
     parameters
     ----------
@@ -281,8 +280,6 @@ def isolation_score(snippet, delta, diag_offset, max_dist, state, pseudo_count=1
     )
 
 
-
-
 """Flame scores"""
 
 
@@ -292,7 +289,7 @@ def flame_score_vertical(
     """
     parameters
     ----------
-    flame_snippet: snippet of the contact map around the flame
+    flame_snippet: snippet of the contact map around a boundary element
     flame_thickness: thickness of the flame
     background_thickness: thickness of the background outside the flame but inside the snippet
     pseudo_count: pseudo count to avoid division by zero
@@ -301,26 +298,28 @@ def flame_score_vertical(
     -------
     ratio of the mean of the flame and the mean of the background
     """
-    mid = (np.shape(flame_snippet)[1]) // 2 + 1
+    mid = (np.shape(flame_snippet)[1]) // 2 
     flame_interior = pseudo_count + np.mean(
-        flame_snippet[:, mid - flame_thickness // 2 : mid + flame_thickness // 2]
+        flame_snippet[:mid, mid - flame_thickness // 2 : mid + flame_thickness // 2]
     )
     flame_background = pseudo_count + np.mean(
         flame_snippet[
-            :, mid - background_thickness // 2 : mid + background_thickness // 2
+            : mid, mid - background_thickness // 2 : mid - flame_thickness // 2
+        ] + flame_snippet[
+            : mid, mid + flame_thickness // 2 : mid + background_thickness // 2
         ]
-    )
+    ) / 2
 
     return flame_interior / flame_background
 
 
 def flame_score_horizontal(
-    flame_snippet, flame_thickness, background_thickness, pseudo_count=1
+    snippet, flame_thickness, background_thickness, pseudo_count=1
 ):
     """
     parameters
     ----------
-    flame_snippet: snippet of the contact map around the flame
+    flame_snippet: snippet of the contact map around a boundary element
     flame_thickness: thickness of the flame
     background_thickness: thickness of the background outside the flame but inside the snippet
     pseudo_count: pseudo count to avoid division by zero
@@ -329,14 +328,19 @@ def flame_score_horizontal(
     -------
     ratio of the mean of the flame and the mean of the background
     """
-    mid = len(flame_snippet) // 2 + 1
+    mid = len(snippet) // 2
     flame_interior = pseudo_count + np.mean(
-        flame_snippet[mid - flame_thickness // 2 : mid + flame_thickness // 2, :]
+        snippet[mid - flame_thickness // 2 : mid + flame_thickness // 2, mid:]
     )
-    flame_background = pseudo_count + np.mean(
-        flame_snippet[
-            mid - background_thickness // 2 : mid + background_thickness // 2, :
-        ]
+    flame_background = (
+        pseudo_count
+        + np.mean(
+            snippet[mid - background_thickness // 2 : mid - flame_thickness // 2, mid:]
+            + snippet[
+                mid + flame_thickness // 2 : mid + background_thickness // 2, mid:
+            ]
+        )
+        / 2
     )
 
     return flame_interior / flame_background
