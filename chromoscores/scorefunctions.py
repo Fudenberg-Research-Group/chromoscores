@@ -262,7 +262,7 @@ def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, s
     return in_tad, out_tad, pile_center
 
 
-def isolation_score(snippet, delta, diag_offset, max_dist, snippet_shapes , pseudo_count=1):
+def isolation_score(snippet, delta, diag_offset, max_dist, snippet_shapes , pseudo_count=0):
     """
     parameters
     ----------
