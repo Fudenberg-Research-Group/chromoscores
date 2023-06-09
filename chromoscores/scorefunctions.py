@@ -199,13 +199,13 @@ def peak_score(
 """Isolation score"""
 
 
-def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, state=1):
+def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, snippet_shapes='triangle'):
     """
     parameters
     ----------
     contact_map: snippet of a contact map around a boundary element
     delta: distance from the border between in_tad and out_tad
-    diag_offset: distance from the diagonal. This also determines the size of the snippet.
+    diag_offset: distance of the snippet from the diagonal. This also determines the size of the snippet.
     max_distance: maximum distance from the diagonal
     state: 1 for triangle snippets, 0 for square snippets
 
@@ -213,6 +213,14 @@ def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, s
     -------
     areas with a size of diag_offset inside and outside a tad
     """
+    if snippet_shapes == 'triangle':
+        triu_num = 1
+    elif snippet_shapes == 'square':
+        triu_num = 0
+    else:
+        raise ValueError("snippet shape can be triangle or square") 
+
+
     csize = len(contact_map) // 2
     window_size = 4 * (diag_offset + delta) + 1
     pile_center = contact_map[
@@ -249,12 +257,12 @@ def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, s
         + 1,
     ] = True
     in_tad[mask] = pile_center[mask]
-    in_tad = np.tril(np.triu(in_tad, state * (diag_offset + 1)), max_distance)
+    in_tad = np.tril(np.triu(in_tad, triu_num * (diag_offset + 1)), max_distance)
 
     return in_tad, out_tad, pile_center
 
 
-def isolation_score(snippet, delta, diag_offset, max_dist, state, pseudo_count=1):
+def isolation_score(snippet, delta, diag_offset, max_dist, snippet_shapes , pseudo_count=1):
     """
     parameters
     ----------
@@ -272,7 +280,7 @@ def isolation_score(snippet, delta, diag_offset, max_dist, state, pseudo_count=1
 
     """
     in_tad, out_tad, pile_center = _get_isolation_areas(
-        snippet, delta, diag_offset, max_dist, state
+        snippet, delta, diag_offset, max_dist, snippet_shapes
     )
     assert pile_center.shape == (len(in_tad), len(in_tad))
     return (pseudo_count + np.mean(pile_center[in_tad > 0])) / (
