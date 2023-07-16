@@ -20,7 +20,7 @@ def peak_score_upperRight(
     ratio of the mean of the peak and the mean of the background
 
     """
-    if len(background_width) > len(peak_snippet // 2):
+    if background_width > len(peak_snippet // 2):
         raise ValueError("background_width exceeds the size of the snippet")
 
     mid = len(peak_snippet) // 2
@@ -56,7 +56,7 @@ def peak_score_lowerRight(
     ratio of the mean of the peak and the mean of the background
 
     """
-    if len(background_width) > len(peak_snippet // 2):
+    if background_width > len(peak_snippet // 2):
         raise ValueError("background_width exceeds the size of the snippet")
 
     mid = len(peak_snippet) // 2
@@ -92,7 +92,7 @@ def peak_score_upperLeft(
     ratio of the mean of the peak and the mean of the background
 
     """
-    if len(background_width) > len(peak_snippet // 2):
+    if background_width > len(peak_snippet // 2):
         raise ValueError("background_width exceeds the size of the snippet")
 
     mid = len(peak_snippet) // 2
@@ -128,7 +128,7 @@ def peak_score_lowerLeft(
     ratio of the mean of the peak and the mean of the background
 
     """
-    if len(background_width) > len(peak_snippet // 2):
+    if background_width > len(peak_snippet // 2):
         raise ValueError("background_width exceeds the size of the snippet")
 
     mid = len(peak_snippet) // 2
