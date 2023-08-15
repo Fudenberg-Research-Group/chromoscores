@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def get_diagonal_pileup(contact_map, boundary_list, window_size):
+def get_diagonal_pileup(contact_map, boundary_list, window_size = 10):
     """
     parameters
     ----------
@@ -13,6 +13,10 @@ def get_diagonal_pileup(contact_map, boundary_list, window_size):
     -------
     a stackup of snippts around the boundary elements
     """
+
+    if window_size <= 0 or window_size > len(contact_map):
+        raise ValueError("window_size must be larger than 0 and smaller than the size of the contact map")
+    
     mat = np.zeros((window_size, window_size))
     for i in range(len(boundary_list)):
         mat += contact_map[
@@ -23,7 +27,7 @@ def get_diagonal_pileup(contact_map, boundary_list, window_size):
 
 
 def get_offdiagonal_pileup(
-    contact_map, boundary_list, min_dist, max_dist, bin_num=5, window_size=10
+    contact_map, boundary_list, min_dist, max_dist, bin_num = 5, window_size = 10
 ):
     """
     parameters
@@ -39,7 +43,10 @@ def get_offdiagonal_pileup(
     -------
     a list of pileups as numpy arrays around the feature (e.g., peaks) as a function of distance from the diagonal
     """
-
+    
+    if window_size <= 0 or window_size > len(contact_map):
+        raise ValueError("window_size must be larger than 0 and smaller than the size of the contact map")
+    
     interval = [min_dist, max_dist]
     bin_borders = np.histogram(interval, bins=bin_num + 1)[1]
     bin_border_int = [int(x) for x in bin_borders]
