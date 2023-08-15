@@ -235,7 +235,7 @@ def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, s
         window_size // 2 + 1 : window_size // 2 + diag_offset + 1,
     ] = True
     out_tad[mask_out] = pile_center[mask_out]
-    out_tad = np.tril(np.triu(out_tad, state * (diag_offset + 1)), max_distance)
+    out_tad = np.tril(np.triu(out_tad, triu_num * (diag_offset + 1)), max_distance)
 
     in_tad = np.zeros(np.shape(pile_center))
     mask = np.zeros(np.shape(pile_center), dtype=bool)
