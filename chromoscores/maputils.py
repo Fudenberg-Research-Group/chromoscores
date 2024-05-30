@@ -68,6 +68,70 @@ def get_offdiagonal_pileup(
     return pile_ups
 
 
+def get_offdiagonal_pileup_orientation(contact_map, boundary_list, orientation, binlist, window_size=10):
+    """
+    Parameters
+    ----------
+    contact_map : np.array
+        Contact map.
+    boundary_list : list
+        List of the boundary elements positions on the diagonal.
+    orientation : list
+        List of the boundary element orientations.
+    binlist : list
+        List of bin edges.
+    window_size : int, optional
+        Size of the window for the pileup (default is 10).
+
+    Returns
+    -------
+    pile_ups : list
+        A list of pileups as numpy arrays around the feature (e.g., peaks) as a function of distance from the diagonal.
+    """
+    
+    bin_num = len(binlist)
+    
+    # Initialize matrices for storing pileups
+    pile_ups = []
+    
+    for i in range(bin_num - 1):
+        dist = (binlist[i] + binlist[i + 1]) / 2
+
+        mat = np.zeros((window_size, window_size))
+        mat_conv = np.zeros((window_size, window_size))
+        mat_dive = np.zeros((window_size, window_size))
+        mat_tandp = np.zeros((window_size, window_size))
+        mat_tandn = np.zeros((window_size, window_size))
+
+        for i_element in boundary_list:
+            for j_element in boundary_list:
+                if binlist[i] <= (j_element - i_element) < binlist[i + 1]:
+                    window_i_start = i_element - window_size // 2
+                    window_i_end = i_element + window_size // 2
+                    window_j_start = j_element - window_size // 2
+                    window_j_end = j_element + window_size // 2
+
+                    mat += contact_map[window_i_start:window_i_end, window_j_start:window_j_end]
+                    
+                    max_orientation = orientation[np.flatnonzero(boundary_list == max(i_element, j_element))]
+                    min_orientation = orientation[np.flatnonzero(boundary_list == min(i_element, j_element))]
+
+                    if max_orientation == '+':
+                        if min_orientation == '-':
+                            mat_conv += contact_map[window_i_start:window_i_end, window_j_start:window_j_end]
+                        else:
+                            mat_tandp += contact_map[window_i_start:window_i_end, window_j_start:window_j_end]
+                    else:
+                        if min_orientation == '+':
+                            mat_dive += contact_map[window_i_start:window_i_end, window_j_start:window_j_end]
+                        else:
+                            mat_tandn += contact_map[window_i_start:window_i_end, window_j_start:window_j_end]
+
+        pile_ups.append([['+-', dist, mat_conv], ['-+', dist, mat_dive], ['++', dist, mat_tandp], ['--', dist, mat_tandn], ['all', dist, mat]])
+
+    return pile_ups
+
+
 def get_observed_over_expected(contact_map):
     """
     parameters
