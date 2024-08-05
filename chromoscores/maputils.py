@@ -60,6 +60,112 @@ def get_offdiagonal_pileup(
 
     return pile_ups
 
+def get_offdiagonal_pileup_binlist(
+    contact_map, boundary_list, binlist, window_size=10
+):
+    """
+    parameters
+    ----------
+    contact_map: contact map
+    boundary_list: list of the boundary elements positions on the diagonal
+    min_dist: minimum distance from the diagonal
+    max_dist: maximum distance from the diagonal
+    bin_num: number of bins
+    window_size: size of the window for the pileup
+
+    Returns
+    -------
+    a list of pileups as numpy arrays around the feature (e.g., peaks) as a function of distance from the diagonal
+    """
+
+    bin_border_int=binlist
+    bin_num=len(bin_border_int)
+
+    pile_ups = []
+    for i in range(bin_num-1):
+        mat = np.zeros((window_size, window_size))
+        dist = (bin_border_int[i] + bin_border_int[i + 1]) / 2
+
+        for i_element in boundary_list:
+            for j_element in boundary_list:
+                if bin_border_int[i] <= (j_element - i_element) < bin_border_int[i + 1]:
+                    mat += contact_map[
+                        i_element - window_size // 2 : i_element + window_size // 2,
+                        j_element - window_size // 2 : j_element + window_size // 2,
+                    ]
+        pile_ups.append([dist, mat])
+
+    return pile_ups
+
+def get_offdiagonal_pileup_binlist_orientation(
+    contact_map, boundary_list, orientation, binlist, window_size=10
+):
+    """
+    parameters
+    ----------
+    contact_map: contact map
+    boundary_list: list of the boundary elements positions on the diagonal
+    orientation: list of the boundary element orientations
+    min_dist: minimum distance from the diagonal
+    max_dist: maximum distance from the diagonal
+    bin_num: number of bins
+    window_size: size of the window for the pileup
+
+    Returns
+    -------
+    a list of pileups as numpy arrays around the feature (e.g., peaks) as a function of distance from the diagonal
+    and orientation
+    """
+    bin_border_int = band_edge_list
+    bin_num = len(bin_border_int)
+    
+    pile_ups = []
+    
+    for i in range(bin_num-1):
+        mat = np.zeros((window_size, window_size))
+        mat_conv = np.zeros((window_size, window_size))
+        mat_dive = np.zeros((window_size, window_size))
+        mat_tandp = np.zeros((window_size, window_size))
+        mat_tandn = np.zeros((window_size, window_size))
+        
+        dist = (bin_border_int[i] + bin_border_int[i + 1]) / 2
+    
+        for i_element in boundary_list:
+                for j_element in boundary_list:
+                    if bin_border_int[i] <= (j_element - i_element) < bin_border_int[i + 1]:
+                        mat += contact_map[
+                            i_element - window_size // 2 : i_element + window_size // 2,
+                            j_element - window_size // 2 : j_element + window_size // 2,
+                        ]
+                        if orientation[np.flatnonzero(boundary_list==np.max([i_element, j_element]))] == '+':
+                            if orientation[np.flatnonzero(boundary_list==np.min([i_element, j_element]))] == '-':
+                                mat_conv += contact_map[
+                                    i_element - window_size // 2 : i_element + window_size // 2,
+                                    j_element - window_size // 2 : j_element + window_size // 2,
+                                ]
+                            else:
+                                mat_tandp += contact_map[
+                                    i_element - window_size // 2 : i_element + window_size // 2,
+                                    j_element - window_size // 2 : j_element + window_size // 2,
+                                ]
+                        else:
+                            if orientation[np.flatnonzero(boundary_list==np.min([i_element, j_element]))] == '+':
+                                mat_dive += contact_map[
+                                    i_element - window_size // 2 : i_element + window_size // 2,
+                                    j_element - window_size // 2 : j_element + window_size // 2,
+                                ]
+                            else:
+                                mat_tandn += contact_map[
+                                    i_element - window_size // 2 : i_element + window_size // 2,
+                                    j_element - window_size // 2 : j_element + window_size // 2,
+                                ]
+
+        pile_ups.extend([[['+-',dist,mat_conv],['-+',dist,mat_dive],['++',dist,mat_tandp],['--',dist,mat_tandn],['all',dist,mat]]])
+        
+    return pile_ups
+
+
+
 
 def get_observed_over_expected(contact_map):
     """
