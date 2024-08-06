@@ -123,7 +123,7 @@ def get_offdiagonal_pileup_binlist_orientation(
     a list of pileups as numpy arrays around the feature (e.g., peaks) as a function of distance from the diagonal
     and orientation
     """
-    bin_border_int = band_edge_list
+    bin_border_int = binlist
     bin_num = len(bin_border_int)
     
     pile_ups = []
