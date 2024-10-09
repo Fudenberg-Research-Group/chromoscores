@@ -13,9 +13,6 @@ A Python package for quantitative analysis of simulated Hi-C maps, providing too
 
 
 
-
-# chromoscores
-
 [![codecov](https://codecov.io/gh/Fudenberg-Research-Group/chromoscores/branch/main/graph/badge.svg?token=chromoscores_token_here)](https://codecov.io/gh/Fudenberg-Research-Group/chromoscores)
 [![CI](https://github.com/Fudenberg-Research-Group/chromoscores/actions/workflows/main.yml/badge.svg)](https://github.com/Fudenberg-Research-Group/chromoscores/actions/workflows/main.yml)
 
