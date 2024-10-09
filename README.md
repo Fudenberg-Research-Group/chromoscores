@@ -29,6 +29,8 @@ base_function()
 $ python -m chromoscores
 #or
 $ chromoscores
+
+```
 ### Analysis 📊
 Observable features can be quantified, including:
 
@@ -43,7 +45,6 @@ See tutorials in `./jupyter_notebooks`.
 [![CI](https://github.com/Fudenberg-Research-Group/chromoscores/actions/workflows/main.yml/badge.svg)](https://github.com/Fudenberg-Research-Group/chromoscores/actions/workflows/main.yml)
 
 
-```
 
 ## Development
 
