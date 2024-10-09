@@ -4,7 +4,17 @@ A Python package created by Fudenberg research group for quantitative analysis o
 
 
 ### Requirement 📃
+- numpy
 
+  
+### Structure of the repository
+The structure of this repository follows as below:
+- maputils : Required functions for processing maps such as obsdrved over expected, or piling up snippets with specific features. 
+- scorefunctions : functions for quantitative analysis of features.
+- snipping: functions for capturing snippets containing specific features.
+- analysis: notebooks and code as tutorials for analyzing simulated data.
+
+  
 ### Installation 📦
 First, 
 
