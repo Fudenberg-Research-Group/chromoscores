@@ -1,11 +1,9 @@
+# Chromoscores
 
-# Python Project Template
+A Python package for quantitative analysis of simulated Hi-C maps, providing tools to capture, process and evaluate chromatin interaction patterns such as Topoligically Associating Domains (TADs), flames, and peaks.
 
-A low dependency and really simple to start project template for Python Projects.
 
-See also 
-- [Flask-Project-Template](https://github.com/rochacbruno/flask-project-template/) for a full feature Flask project including database, API, admin interface, etc.
-- [FastAPI-Project-Template](https://github.com/rochacbruno/fastapi-project-template/) The base to start an openapi project featuring: SQLModel, Typer, FastAPI, JWT Token Auth, Interactive Shell, Management Commands.
+
 
 ### HOW TO USE THIS TEMPLATE
 
