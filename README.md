@@ -35,7 +35,9 @@ $ chromoscores
 Observable features can be quantified, including:
 
 - TADs (Topologically Associating Domains)
+- flames
 - Dots (loops between barriers)
+
   
 See tutorials in `./jupyter_notebooks`.
 
