@@ -37,6 +37,7 @@ from chromoscores import base_function
 ### Analysis 📊
 Observable features can be quantified, including:
 
+- Observed over expected
 - TADs (Topologically Associating Domains)
 - flames
 - Dots (loops between barriers)
