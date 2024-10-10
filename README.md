@@ -23,6 +23,7 @@ First,
 ```
 git https://github.com/Fudenberg-Research-Group/chromoscores.git
 ```
+then
 ```bash
 pip install chromoscores
 ```
