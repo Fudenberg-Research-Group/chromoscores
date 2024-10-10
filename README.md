@@ -31,19 +31,9 @@ pip install chromoscores
 ## Usage
 
 ```py
-from chromoscores import BaseClass
 from chromoscores import base_function
-
-BaseClass().base_method()
-base_function()
 ```
 
-```bash
-$ python -m chromoscores
-#or
-$ chromoscores
-
-```
 ### Analysis 📊
 Observable features can be quantified, including:
 
