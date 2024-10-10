@@ -5,7 +5,7 @@ import numpy as np
 
 
 def peak_score_upperRight(
-    peak_snippet, peak_width=3, background_width=10, pseudo_count=0
+    peak_snippet, peak_width = 3, background_width = 10, pseudo_count = 0
 ):
     """
     parameters
@@ -41,7 +41,7 @@ def peak_score_upperRight(
 
 
 def peak_score_lowerRight(
-    peak_snippet, peak_width=3, background_width=10, pseudo_count=0
+    peak_snippet, peak_width = 3, background_width = 10, pseudo_count = 0
 ):
     """
     parameters
@@ -77,7 +77,7 @@ def peak_score_lowerRight(
 
 
 def peak_score_upperLeft(
-    peak_snippet, peak_width=3, background_width=10, pseudo_count=0
+    peak_snippet, peak_width = 3, background_width = 10, pseudo_count = 0
 ):
     """
     parameters
@@ -113,7 +113,7 @@ def peak_score_upperLeft(
 
 
 def peak_score_lowerLeft(
-    peak_snippet, peak_width=3, background_width=10, pseudo_count=0
+    peak_snippet, peak_width = 3, background_width = 10, pseudo_count = 0
 ):
     """
     parameters
@@ -207,7 +207,7 @@ def _get_isolation_areas(contact_map, delta=1, diag_offset=3, max_distance=10, s
     delta: distance from the border between in_tad and out_tad
     diag_offset: distance of the snippet from the diagonal. This also determines the size of the snippet.
     max_distance: maximum distance from the diagonal
-    state: 1 for triangle snippets, 0 for square snippets
+    snippet_shapes: shape of the snippets for taking the average. 
 
     returns
     -------
@@ -271,7 +271,7 @@ def isolation_score(snippet, delta, diag_offset, max_dist, snippet_shapes , pseu
            flames when extracting in_tad and out_tad areas.
     diag_offset: distance from the diagonal. This also determines the size of the snippet.
     max_distance: maximum distance from the diagonal
-    state: 1 for triangle snippets, 0 for square snippets
+    snippet_shapes: shape of the snippet for taking the average
     pseudo_count: pseudo count to avoid division by zero
 
     returns
@@ -292,7 +292,7 @@ def isolation_score(snippet, delta, diag_offset, max_dist, snippet_shapes , pseu
 
 
 def flame_score_vertical(
-    flame_snippet, flame_thickness, background_thickness, pseudo_count=1
+    flame_snippet, flame_thickness, background_thickness, pseudo_count = 1
 ):
     """
     parameters
@@ -322,7 +322,7 @@ def flame_score_vertical(
 
 
 def flame_score_horizontal(
-    snippet, flame_thickness, background_thickness, pseudo_count=1
+    snippet, flame_thickness, background_thickness, pseudo_count = 1
 ):
     """
     parameters

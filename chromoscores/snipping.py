@@ -58,11 +58,12 @@ def tad_snippet_sectors(
     parameters
     ----------
     contact_map: snippet of a contact map around a boundary element
+    boundary_list: boundary_list: list of the boundary elements positions on the diagonal
+    index: index of the boundary element in the boundary_list. This should be in the range of boundary_list.
     delta: distance from the border between in_tad and out_tad. is defined to exclude
            flames when extracting in_tad and out_tad areas.
     diag_offset: distance from the diagonal. This also determines the size of the snippet.
     max_distance: maximum distance from the diagonal
-    state: 1 for triangle snippets, 0 for square snippets
 
     returns
     -------
