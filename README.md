@@ -1,5 +1,7 @@
 # Chromoscores
 
+![Alt Text](./docs/representation.png)
+
 A Python package for quantitative analysis of simulated Hi-C maps, providing tools to capture, process and evaluate chromatin interaction patterns such as Topoligically Associating Domains (TADs), flames, and peaks.
 
 
