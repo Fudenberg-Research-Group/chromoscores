@@ -5,13 +5,13 @@ def get_diagonal_pileup(contact_map, boundary_list, window_size = 10):
     """
     parameters
     ----------
-    contact_map: contact map
-    boundary_list: list of the boundary elements positions on the diagonal
-    window_size: size of the window
+    contact_map: contact map (2D array)
+    boundary_list: list of the boundary elements' positions on the diagonal
+    window_size: size of the window (must be odd for center)
 
     Returns
     -------
-    a stackup of snippts around the boundary elements
+    a stackup of snippets around the boundary elements
     """
 
     if window_size <= 0 or window_size > len(contact_map):
