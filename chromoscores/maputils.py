@@ -75,9 +75,7 @@ def get_offdiagonal_pileup_binlist(
     ----------
     contact_map: contact map
     boundary_list: list of the boundary elements positions on the diagonal
-    min_dist: minimum distance from the diagonal
-    max_dist: maximum distance from the diagonal
-    bin_num: number of bins
+    binlist : exact list of bin boundaries 
     window_size: size of the window for the pileup
 
     Returns
@@ -113,9 +111,7 @@ def get_offdiagonal_pileup_binlist_orientation(
     contact_map: contact map
     boundary_list: list of the boundary elements positions on the diagonal
     orientation: list of the boundary element orientations
-    min_dist: minimum distance from the diagonal
-    max_dist: maximum distance from the diagonal
-    bin_num: number of bins
+    binlist: exact list of bins boundaries
     window_size: size of the window for the pileup
 
     Returns
@@ -177,8 +173,6 @@ def get_offdiagonal_pileup_binlist_orientation(
         pile_ups.extend([[['+-',dist,mat_conv, n_conv],['-+',dist,mat_dive, n_dive],['++',dist,mat_tandp, n_tand_p],['--',dist,mat_tandn, n_tand_n],['all',dist,mat, n_tot]]])
         
     return pile_ups
-
-
 
 
 def get_observed_over_expected(contact_map):
