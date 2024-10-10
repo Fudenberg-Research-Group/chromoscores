@@ -51,6 +51,3 @@ See tutorials in `./jupyter_notebooks`.
 
 
 
-## Development
-
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
