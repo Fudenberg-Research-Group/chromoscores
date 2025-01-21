@@ -150,9 +150,9 @@ def peak_score_lowerLeft(
 
 def peak_score(
     peak_snippet,
-    peak_width,
-    background_width,
-    pseudo_count,
+    peak_width = 3,
+    background_width = 10,
+    pseudo_count = 0,
 ):
     """
     parameters
